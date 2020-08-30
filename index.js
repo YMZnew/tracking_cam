@@ -144,7 +144,11 @@ function processVideo() {
 //          cv.imshow('canvasOutput', matchingImage);
 
 //          [kp1, des, kp2_cam, des_cam, matches, good, matchingImage, matcher, orb].forEach(m => m.delete());
+            try{
          [kp1, des, kp2_cam, des_cam, matches, good, matcher, orb].forEach(m => m.delete());
+            }catch(error){
+             console.log(error)  
+            }
             
     }
         else
