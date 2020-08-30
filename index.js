@@ -126,11 +126,14 @@ function processVideo() {
         const ratio = .75, good = new cv.DMatchVectorVector();
         for (let i = 0; i < matches.size(); i++) {
           const m = matches.get(i).get(0), n = matches.get(i).get(1);
+            try{
           if (m.distance < ratio * n.distance) {
             const t = new cv.DMatchVector();
             t.push_back(m);
             good.push_back(t);
           }
+            }catch(err){
+            }
         }
 
         // console.log(good.size())
