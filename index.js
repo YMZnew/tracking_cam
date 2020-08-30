@@ -123,7 +123,7 @@ function processVideo() {
         if(des_cam.cols != 0 && des_cam.rows != 0){
             console.log("not zero")
         matcher.knnMatch(des,des_cam,matches,2);
-        const ratio = .5, good = new cv.DMatchVectorVector();
+        const ratio = .75, good = new cv.DMatchVectorVector();
         for (let i = 0; i < matches.size(); i++) {
           const m = matches.get(i).get(0), n = matches.get(i).get(1);
           if (m.distance < ratio * n.distance) {
@@ -133,11 +133,14 @@ function processVideo() {
           }
         }
 
-        console.log(good.size())
+        // console.log(good.size())
+        document.getElementById("numberOfDetected").innerText = "number of features well matched = "+good.size()
         const matchingImage = new cv.Mat()
   cv.drawMatchesKnn(orig, kp1, frame, kp2_cam, good, matchingImage);
         //  cv.drawMatchesKnn(orig,kp1,frame,kp2_cam,matches,dst);
          cv.imshow('canvasOutput', matchingImage);
+
+         [kp1, des, kp2_cam, des_cam, matches, good, matchingImage, matcher, orb].forEach(m => m.delete());
             
     }
         else
