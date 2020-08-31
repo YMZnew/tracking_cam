@@ -10,7 +10,7 @@ function onOpenCvReady() {
 
     cv['onRuntimeInitialized']=()=>{
     console.log("YMZ")
-    alert("YMZ");
+    // alert("YMZ");
     let video = document.getElementById('videoInput');
     let utils = new Utils('errorOutput');
 
@@ -123,21 +123,41 @@ function processVideo() {
         if(des_cam.cols != 0 && des_cam.rows != 0){
             console.log("not zero")
         matcher.knnMatch(des,des_cam,matches,2);
-        const ratio = .75, good = new cv.DMatchVectorVector();
+        const ratio = .75, good = new cv.DMatchVector();
+        // const t = new cv.DMatchVector();
         for (let i = 0; i < matches.size(); i++) {
           const m = matches.get(i).get(0), n = matches.get(i).get(1);
             try{
           if (m.distance < ratio * n.distance) {
-            const t = new cv.DMatchVector();
-            t.push_back(m);
-            good.push_back(t);
+            // t.push_back(m);
+            good.push_back(m);
           }
             }catch(err){
             }
         }
 
-        // console.log(good.size())
+        points1 = [];
+        points2 = [];
         document.getElementById("numberOfDetected").innerText = "number of features well matched = "+good.size();
+
+        if(good.size() > 15){
+
+          for(let i=0 ; i< good.size() ; i++){
+            // console.log(kp1.get());
+            points1.push(kp1.get(good.get(i).queryIdx).pt);
+            points2.push(kp2_cam.get(good.get(i).trainIdx).pt);
+          }
+
+          // let rs = new cv.Mat();
+          let srcPoints = cv.matFromArray(points1.length, 2, cv.CV_32F,points1);
+          let dstPoints = cv.matFromArray(points2.length, 2, cv.CV_32F,points2);
+          cv.findHomography(srcPoints,dstPoints,cv.RANSAC,5);
+          // console.log(rs)
+        }
+
+
+
+        // console.log(good.size())
       // const matchingImage = new cv.Mat()
    //cv.drawMatchesKnn(orig, kp1, frame, kp2_cam, good, matchingImage);
        //   cv.drawMatchesKnn(orig,kp1,frame,kp2_cam,matches,dst);
