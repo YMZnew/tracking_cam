@@ -138,12 +138,14 @@ function processVideo() {
 
         // console.log(good.size())
         document.getElementById("numberOfDetected").innerText = "number of features well matched = "+good.size();
-//         const matchingImage = new cv.Mat()
-//   cv.drawMatchesKnn(orig, kp1, frame, kp2_cam, good, matchingImage);
-        //  cv.drawMatchesKnn(orig,kp1,frame,kp2_cam,matches,dst);
-//          cv.imshow('canvasOutput', matchingImage);
+       const matchingImage = new cv.Mat()
+   cv.drawMatchesKnn(orig, kp1, frame, kp2_cam, good, matchingImage);
+          cv.drawMatchesKnn(orig,kp1,frame,kp2_cam,matches,dst);
+          cv.imshow('canvasOutput', matchingImage);
 
-//          [kp1, des, kp2_cam, des_cam, matches, good, matchingImage, matcher, orb].forEach(m => m.delete());
+//  
+
+        [kp1, des, kp2_cam, des_cam, matches, good, matchingImage, matcher, orb].forEach(m => m.delete());
 //          [kp1, des, kp2_cam, des_cam, matches, good, matcher, orb].forEach(m => m.delete());
           
             
