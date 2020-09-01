@@ -27,7 +27,7 @@ function onOpenCvReady() {
             // pass the stream to the videoRef
             video.srcObject = stream;
             video.play();
-
+            
           }, (error) => {
             console.log("Couldn't start the webcam")
             console.error(error)
@@ -68,13 +68,13 @@ cv.normalize(roiHist, roiHist, 0, 255, cv.NORM_MINMAX);
 roi.delete(); hsvRoi.delete(); mask.delete(); low.delete(); high.delete(); hsvRoiVec.delete();
 
 // Setup the termination criteria, either 10 iteration or move by atleast 1 pt
-let termCrit = new cv.TermCriteria(cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 1);
+// let termCrit = new cv.TermCriteria(cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 1);
 
 let hsv = new cv.Mat(video.height, video.width, cv.CV_8UC3);
 let hsvVec = new cv.MatVector();
 hsvVec.push_back(hsv);
-let dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
-let trackBox = null;
+// let dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
+// let trackBox = null;
 
 const FPS = 30;
 function processVideo() {
@@ -121,7 +121,7 @@ function processVideo() {
         //cv.drawKeypoints(frame, kp2_cam, img3, [0, 255, 0, 255]);
         let dst = new cv.Mat();
         if(des_cam.cols != 0 && des_cam.rows != 0){
-            console.log("not zero")
+            //console.log("not zero")
         matcher.knnMatch(des,des_cam,matches,2);
         const ratio = .75, good = new cv.DMatchVector();
         // const t = new cv.DMatchVector();
@@ -151,8 +151,61 @@ function processVideo() {
           // let rs = new cv.Mat();
           let srcPoints = cv.matFromArray(points1.length, 2, cv.CV_32F,points1);
           let dstPoints = cv.matFromArray(points2.length, 2, cv.CV_32F,points2);
-          cv.findHomography(srcPoints,dstPoints,cv.RANSAC,5);
-          // console.log(rs)
+          let rs = cv.findHomography(srcPoints,dstPoints,cv.RANSAC,5);
+          if(rs.cols > 0 && !rs.empty()){
+          
+            // console.log(orig.width);
+            // console.log(orig.h);
+            var obj_corners = [];
+    obj_corners[0] = {x:0, y: 0};
+    obj_corners[1] = {x: 320, y: 0};
+    obj_corners[2] = {x: 320, y: 240};
+    obj_corners[3] = {x:0, y:240};
+    // console.log(rs);
+
+    let corners = cv.matFromArray(4, 2, cv.CV_32FC2,obj_corners);
+
+    let pT = new cv.matFromArray(4, 2,cv.CV_32FC2,[]);
+    // let pT = corners;
+    // console.log(rs.type() + " " + JSON.stringify(rs.size()) + " "+rs.channels());
+    // console.log(pT.type() + " " + JSON.stringify(pT.size()) + " "+pT.channels());
+    // console.log(corners.type() + " " + JSON.stringify(corners.size()) + " "+corners.channels());
+            cv.perspectiveTransform(corners,pT,rs);
+
+            var c = document.getElementById("canvasOutput");
+var ctx = c.getContext("2d");
+
+
+cv.imshow('canvasOutput',frame)
+
+
+
+        let p = pT.data64F
+
+        ctx.beginPath();              
+ctx.lineWidth = "5";
+ctx.strokeStyle = "green";  // Green path
+ctx.moveTo(p[0],[1]);
+ctx.lineTo(p[2], p[3]);
+ctx.lineTo(p[4], [5]);
+ctx.lineTo(p[6], p[7]);
+
+ctx.stroke();
+
+            // for(let i =0 ; i< pT.size(); i++){
+            //   p = pT[i];
+            //     // console.log(pT[i].x);
+            // }
+            
+            console.log(p);
+            
+          }else{
+            console.log("YMZ - zero");
+          }
+
+          
+
+        
         }
 
 
@@ -170,8 +223,8 @@ function processVideo() {
           
             
     }
-        else
-        console.log("is zero")
+        //else
+        //console.log("is zero")
         //cv.drawMatchesKnn(orig,kp1,frame,kp2_cam,dm,dst);
         //cv.imshow('canvasOutput', dst);
 
