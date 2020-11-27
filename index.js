@@ -18,7 +18,7 @@ function onOpenCvReady() {
         // define a Promise that'll be used to load the webcam and read its frames
         const webcamPromise = navigator.mediaDevices
           .getUserMedia({
-            video: true,
+            video:{ facingMode: { exact: "environment" }},
             audio: false,
           })
           .then(stream => {
