@@ -35,7 +35,7 @@ function onOpenCvReady() {
     
 
     // video.play();
-
+try{
 let cap = new cv.VideoCapture(video);
 
 // take first frame of the video
@@ -44,7 +44,7 @@ cap.read(frame);
 
 
 // delete useless mats.
-roi.delete(); hsvRoi.delete(); mask.delete(); low.delete(); high.delete(); hsvRoiVec.delete();
+// roi.delete(); hsvRoi.delete(); mask.delete(); low.delete(); high.delete(); hsvRoiVec.delete();
 
 // Setup the termination criteria, either 10 iteration or move by atleast 1 pt
 // let termCrit = new cv.TermCriteria(cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 1);
@@ -56,6 +56,9 @@ hsvVec.push_back(hsv);
 // let trackBox = null;
 
 const FPS = 30;
+}catch(err){
+    document.getElementById("numberOfDetected").innerText = "error0 : " +err;
+}
 function processVideo() {
 
         document.getElementById("numberOfDetected").innerText = "YMZ"
