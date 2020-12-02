@@ -58,6 +58,7 @@ hsvVec.push_back(hsv);
 // let trackBox = null;
 
 const FPS = 30;
+let templ = cv.imread(target);
 
 function processVideo() {
 
@@ -74,16 +75,20 @@ function processVideo() {
         // start processing.
         cap.read(frame);
        
-        let templ = cv.imread(target);
+      
         let dst = new cv.Mat();
         let mask = new cv.Mat();
 cv.matchTemplate(frame, templ, dst, cv.TM_CCOEFF_NORMED, mask);
 let result = cv.minMaxLoc(dst, mask);
 let maxPoint = result.maxLoc;
 
+let color = new cv.Scalar(255, 0, 0, 255);
 let point = new cv.Point(maxPoint.x + templ.cols, maxPoint.y + templ.rows);
 cv.rectangle(frame, maxPoint, point, color, 2, cv.LINE_8, 0);
 cv.imshow('canvasOutput', frame);
+
+mask.delete();
+dst.delete();
 
 // console.log(maxPoint.x+ " , "+ maxPoint.y);
       document.getElementById("numberOfDetected").innerText = "point : " +maxPoint.x+ " , "+ maxPoint.y +" value : " + result.maxVal;
