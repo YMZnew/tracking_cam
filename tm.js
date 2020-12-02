@@ -58,7 +58,7 @@ hsvVec.push_back(hsv);
 const FPS = 30;
 function processVideo() {
 
-        
+        document.getElementById("numberOfDetected").innerText = "YMZ"
     try{
         if (video.ended) {
             console.log("YMA")
@@ -79,7 +79,7 @@ let result = cv.minMaxLoc(dst, mask);
 let maxPoint = result.maxLoc;
 
 // console.log(maxPoint.x+ " , "+ maxPoint.y);
-      document.getElementById("numberOfDetected").innerText = maxPoint.x+ " , "+ maxPoint.y;
+      document.getElementById("numberOfDetected").innerText = "point : " +maxPoint.x+ " , "+ maxPoint.y;
 
         // find the keypoints with ORB
         // orb.detect(orig, kp1);
@@ -111,7 +111,7 @@ let maxPoint = result.maxLoc;
         let delay = 1000/FPS - (Date.now() - begin);
         setTimeout(processVideo, delay);
     }catch(err){
-             document.getElementById("numberOfDetected").innerText = err;
+             document.getElementById("numberOfDetected").innerText = "error : "+err;
     }
   
 };
