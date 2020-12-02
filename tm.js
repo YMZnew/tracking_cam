@@ -82,7 +82,7 @@ let result = cv.minMaxLoc(dst, mask);
 let maxPoint = result.maxLoc;
 
 // console.log(maxPoint.x+ " , "+ maxPoint.y);
-      document.getElementById("numberOfDetected").innerText = "point : " +maxPoint.x+ " , "+ maxPoint.y;
+      document.getElementById("numberOfDetected").innerText = "point : " +maxPoint.x+ " , "+ maxPoint.y +" value : " + result.maxVal;
 
         // find the keypoints with ORB
         // orb.detect(orig, kp1);
