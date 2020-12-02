@@ -77,7 +77,7 @@ function processVideo() {
         let templ = cv.imread(target);
         let dst = new cv.Mat();
         let mask = new cv.Mat();
-cv.matchTemplate(frame, templ, dst, cv.TM_CCOEFF, mask);
+cv.matchTemplate(frame, templ, dst, cv.TM_CCOEFF_NORMED, mask);
 let result = cv.minMaxLoc(dst, mask);
 let maxPoint = result.maxLoc;
 
