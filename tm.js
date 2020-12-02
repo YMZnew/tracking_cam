@@ -59,6 +59,7 @@ const FPS = 30;
 function processVideo() {
 
         
+    try{
         if (video.ended) {
             console.log("YMA")
             // clean and stop.
@@ -77,7 +78,8 @@ cv.matchTemplate(src, templ, dst, cv.TM_CCOEFF, mask);
 let result = cv.minMaxLoc(dst, mask);
 let maxPoint = result.maxLoc;
 
-console.log(maxPoint.x+ " , "+ maxPoint.y);
+// console.log(maxPoint.x+ " , "+ maxPoint.y);
+      document.getElementById("numberOfDetected").innerText = maxPoint.x+ " , "+ maxPoint.y;
 
         // find the keypoints with ORB
         // orb.detect(orig, kp1);
@@ -108,6 +110,9 @@ console.log(maxPoint.x+ " , "+ maxPoint.y);
 
         let delay = 1000/FPS - (Date.now() - begin);
         setTimeout(processVideo, delay);
+    }catch(err){
+             document.getElementById("numberOfDetected").innerText = err;
+    }
   
 };
 
