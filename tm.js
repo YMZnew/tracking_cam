@@ -39,8 +39,6 @@ function onOpenCvReady() {
 
 let cap = new cv.VideoCapture(video);
 
-try{
-
 
 // take first frame of the video
 let frame = new cv.Mat(video.height, video.width, cv.CV_8UC4);
@@ -60,9 +58,7 @@ hsvVec.push_back(hsv);
 // let trackBox = null;
 
 const FPS = 30;
-}catch(err){
-    document.getElementById("numberOfDetected").innerText = "error00 : " +err;
-}
+
 function processVideo() {
 
         document.getElementById("numberOfDetected").innerText = "YMZ"
