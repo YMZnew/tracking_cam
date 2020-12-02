@@ -1,1 +1,21 @@
-
+<html>
+  <head>
+      <title>YMZ YMA</title>
+    <!-- Load the latest version of TensorFlow.js -->
+        <script src="../bower_components/jquery/jquery.min.js"></script>
+	<script src="jquery.min.js"></script>
+    <script async src="opencv.js" onload="onOpenCvReady();"></script>
+    <script src="tm.js"></script>
+  </head>
+  <body>
+    <div id="console"></div>
+    <!-- Add an image that we will use to test -->
+    
+    <video id="videoInput" width="320" height="240"></video>
+    <img src="target.jpg" id="target" width="320" height="240" />
+    <canvas id="canvasOutput"></canvas>
+    <p class="err" id="errorOutput"></p>
+    <p id="numberOfDetected"></p>
+    <script async src="utils.js" onload="onUtilsReady();"></script>
+  </body>
+</html>
