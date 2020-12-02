@@ -81,6 +81,10 @@ cv.matchTemplate(frame, templ, dst, cv.TM_CCOEFF_NORMED, mask);
 let result = cv.minMaxLoc(dst, mask);
 let maxPoint = result.maxLoc;
 
+let point = new cv.Point(maxPoint.x + templ.cols, maxPoint.y + templ.rows);
+cv.rectangle(frame, maxPoint, point, color, 2, cv.LINE_8, 0);
+cv.imshow('canvasOutput', frame);
+
 // console.log(maxPoint.x+ " , "+ maxPoint.y);
       document.getElementById("numberOfDetected").innerText = "point : " +maxPoint.x+ " , "+ maxPoint.y +" value : " + result.maxVal;
 
