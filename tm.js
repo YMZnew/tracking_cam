@@ -35,8 +35,12 @@ function onOpenCvReady() {
     
 
     // video.play();
-try{
+
+
 let cap = new cv.VideoCapture(video);
+
+try{
+
 
 // take first frame of the video
 let frame = new cv.Mat(video.height, video.width, cv.CV_8UC4);
@@ -57,7 +61,7 @@ hsvVec.push_back(hsv);
 
 const FPS = 30;
 }catch(err){
-    document.getElementById("numberOfDetected").innerText = "error0 : " +err;
+    document.getElementById("numberOfDetected").innerText = "error00 : " +err;
 }
 function processVideo() {
 
@@ -114,7 +118,7 @@ let maxPoint = result.maxLoc;
         let delay = 1000/FPS - (Date.now() - begin);
         setTimeout(processVideo, delay);
     }catch(err){
-             document.getElementById("numberOfDetected").innerText = "error : "+err;
+             document.getElementById("numberOfDetected").innerText = "error11 : "+err;
     }
   
 };
