@@ -76,8 +76,7 @@ window.videoElem.play();
 window.videoCanv = document.createElement("canvas");
 
 
-
-//let cap = new cv.VideoCapture(video);
+let cap = new cv.VideoCapture(video);
 
 
 // take first frame of the video
